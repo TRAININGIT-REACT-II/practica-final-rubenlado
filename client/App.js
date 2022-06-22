@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Status from "./components/Status";
+import Body from "./src/App/Body";
+import {BrowserRouter as Router} from 'react-router-dom';
 
 // Componente principal de la aplicación.
 const App = () => {
@@ -16,14 +17,14 @@ const App = () => {
 
   // Mostramos la aplicación
   return (
-    <main>
-      <h1>Curso de React de TrainingIT</h1>
-      <p>
-        Estado del servidor:
-        {loading ? " Cargando..." : <Status status={status} />}
-      </p>
-    </main>
+    <>
+      <Router>
+
+        <Body/>  
+        </Router>         
+    </>
   );
 };
 
 export default App;
+
