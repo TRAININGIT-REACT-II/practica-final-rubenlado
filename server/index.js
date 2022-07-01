@@ -5,6 +5,7 @@ const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const path = require("path");
 const { nanoid } = require("nanoid");
+const { Console } = require("console");
 
 // Configuracion
 const DB_PATH =
@@ -17,7 +18,7 @@ const SALT_ROUNDS_TO_ENCRYPT = 5;
 const USER_ID_LENGTH = 8;
 const NOTE_ID_LENGTH = 8;
 const TOKEN_LENGTH = 24;
-const API_TOKEN_HEADER = "api-token";
+const API_TOKEN_HEADER = "apitoken";
 
 // Cargamos la base de datos (lowdb)
 // @ref https://github.com/typicode/lowdb
@@ -39,6 +40,8 @@ fastify.decorateRequest("authenticated", false);
 // Agregamos un hook para cargar el usuario en cada petición
 // si el token está presente.
 fastify.addHook("preHandler", (request, _reply, done) => {
+  console.log("headers")
+  console.log(request.headers);
   const token = request.headers[API_TOKEN_HEADER];
   request.token = token;
 
@@ -57,6 +60,7 @@ fastify.addHook("preHandler", (request, _reply, done) => {
 // Una función para compborar si el usuario existe.
 // En otro caso, devuelve un 401
 const checkAuthentication = (request, reply, done) => {
+  console.log(request);
   if (request.token == null) {
     reply.code(401).send({
       error: "El token no está presente en la petición",
@@ -91,8 +95,8 @@ fastify.get("/api", async () => {
  * el cuerpo del mensaje
  */
 fastify.post("/api/register", (request, reply) => {
-  const { username, password } = request.body;
 
+  const { username, password } = JSON.parse(request.body);
   const userExists = db.get("users").find({ username }).value();
 
   if (userExists != null) {
@@ -134,8 +138,7 @@ fastify.post("/api/register", (request, reply) => {
  * Inicia sesión devolviendo el token para las peticiones
  */
 fastify.post("/api/login", (request, reply) => {
-  const { username, password } = request.body;
-
+  const { username, password } = JSON.parse(request.body);
   const user = db.get("users").find({ username }).value();
 
   if (user == null) {
@@ -231,7 +234,7 @@ fastify.route({
     // Obtenemos el usuario
     const { id: userId } = request.user;
     const { title, content } = request.body;
-
+    console.log(request);
     const newPost = {
       author: userId,
       title,

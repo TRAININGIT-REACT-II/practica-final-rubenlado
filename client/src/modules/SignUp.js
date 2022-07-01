@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { loginAction } from "../../store/actions/AuthActions";
+import {useAuth} from '../hooks'
+import { signupAction } from "../../store/actions/AuthActions";
 import { useDispatch } from 'react-redux';
-import {useHistory} from 'react-router-dom';
 
 import "./Login.css";
 
@@ -10,12 +10,12 @@ const DEFAULT_STATE = {
     password: ""
   };
 
-export const Login = () => {
+
+export const SignUp = () => {
 
   const [formState, setFormState] = useState(DEFAULT_STATE);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const onChange = (key) => {
     return (e) => setFormState({
@@ -26,7 +26,7 @@ export const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginAction(formState.userName, formState.password, history));
+    dispatch(signupAction( formState.userName, formState.password));
   }
 
   return (
@@ -34,10 +34,10 @@ export const Login = () => {
     <div className="col-6">
       <form onSubmit={onSubmit}>
         <label htmlFor="controlled-name">Usuario</label>
-        <input id="controlled-name" type="text" value={formState.user} onChange={onChange("userName")} />
+        <input id="controlled-name" type="text" value={formState.userName} onChange={onChange("userName")}/>
         <label htmlFor="controlled-color">Contraseña</label>
-        <input id="controlled-color" type="text" value={formState.color} onChange={onChange("password")} />
-        <button>Login</button>
+        <input id="controlled-color" type="text" value={formState.password} onChange={onChange("password")} />
+        <button>Sign Up</button>
       </form>
     </div>
   </div>

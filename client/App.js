@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import Body from "./src/App/Body";
 import {BrowserRouter as Router} from 'react-router-dom';
-
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import Header from "./src/App/Header";
+import ErrorBoundary from "./utils/ErrorBoundary";
 // Componente principal de la aplicación.
 const App = () => {
   const [status, setStatus] = useState(false);
@@ -18,10 +21,14 @@ const App = () => {
   // Mostramos la aplicación
   return (
     <>
+    <Provider store={store}>
       <Router>
-
-        <Body/>  
-        </Router>         
+        <ErrorBoundary message="Se ha producido un error">
+          <Header/>
+          <Body/>  
+        </ErrorBoundary>
+      </Router>     
+    </Provider>   
     </>
   );
 };

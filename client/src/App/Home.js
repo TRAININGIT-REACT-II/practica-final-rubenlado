@@ -6,17 +6,16 @@ import { useCallback } from 'react';
 
 const Home = () => {
 const history = useHistory();
-const handleOnClick = useCallback(() => history.push(`/login`));
+const handleOnClick = (field) => useCallback(() => history.push(`/` + field));
 
 return (
-        <div className="layout">
-          <header className="layout_header">
+         <div className="container">
           <h1>Training note</h1>
             <div className="d-grid gap-2">
-                  <Button variant="primary" size="lg" onClick={handleOnClick}>Inicio de sesion</Button>
-                  <Button variant="secondary" size="lg" onClick={handleOnClick}>Registro</Button>
+            
+                  <Button  size="lg" onClick={handleOnClick("login")} class="btn btn-primary btn-lg btn-block">Inicio de sesion</Button>
+                  <Button  size="lg" onClick={handleOnClick("signup")} class="btn btn-secondary btn-lg btn-block">Registro</Button>
             </div>
-          </header>
           <main>
           </main>
         </div>
