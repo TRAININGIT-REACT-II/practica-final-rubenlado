@@ -7,7 +7,8 @@ import {
 const initialState = {
     id: "",
     username: "",
-    token: "", 
+    token: localStorage.getItem('userToken') || '',
+    isAuth: localStorage.getItem('userToken') ? true : false , 
 };
 
 export function AuthReducer(state = initialState, action) {
