@@ -3,15 +3,18 @@ import { useStore } from "react-redux";
 import { useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import DeleteModal from "../../utils/DeleteModal";
+import { useHistory } from "react-router-dom";
+import { useModal } from "../hooks";
 import "./MyNotes.css";
 
 export const MyNotes = () => {
   const [notes, setNotes] = useState("");
-  const [showModal, setShowModal] = useState(false);
-
+  const { isShowing, open, close, selected } = useModal();
   const closeModal = () => setShowModal(false);
   const store = useStore();
   const authData = store.getState();
+  const history = useHistory();
+  const handleOnClickEdit = (id) => () => history.push(`/editNote/` + id);
 
   const getNotes = () => {
     fetch("/api/notes", {
@@ -36,21 +39,26 @@ export const MyNotes = () => {
     }).then((res) => res.json());
   };
 
-  const deleteConfirmation = (id) => {
-
-    setShowModal(true);
-    
+  const NoteModal = ({ id }) => {
+    console.log("modal")
     return (
-        <DeleteModal show={showModal} onClose={closeModal}>
-            <h3>¿Seguro que quieres borrar la nota?</h3>
-            <p>Esta acción no se puede deshacer</p>
-            <Button onClick={()=>deleteNote(id)}>
-                Borrar
-            </Button>
-            <Button>
-                Cerrar
-            </Button>
-        </DeleteModal>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                  Content for the dialog / modal goes here.
+                </div>
+                <div class="modal-footer">
+                  <a href="#" data-dismiss="modal" class="btn">Close</a>
+                  <a href="#" class="btn btn-primary">Save changes</a>
+                </div>
+              </div>
+            </div>
+        </div>
     );
   };
 
@@ -71,14 +79,19 @@ export const MyNotes = () => {
                   <Button variant="primary" size="sm" className="note-button">
                     Ver nota
                   </Button>
-                  <Button variant="primary" size="sm" className="note-button">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="note-button"
+                    onClick={handleOnClickEdit(note.id)}
+                  >
                     Editar nota
                   </Button>
                   <Button
                     variant="danger"
                     size="sm"
                     className="note-button"
-                    onClick={() =>deleteConfirmation(note.id)}
+                    onClick={() => open(note.id)}
                   >
                     Borrar nota
                   </Button>
@@ -88,6 +101,8 @@ export const MyNotes = () => {
           </ul>
         )}
       </div>
+
+      {isShowing && (<NoteModal id={selected} />)}
     </>
   );
 };

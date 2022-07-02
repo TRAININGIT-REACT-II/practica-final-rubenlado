@@ -30,16 +30,17 @@ export const Login = () => {
   }
 
   return (
-  <div className="row">
-    <div className="col-6">
+  
       <form onSubmit={onSubmit}>
-        <label htmlFor="controlled-name">Usuario</label>
-        <input id="controlled-name" type="text" value={formState.user} onChange={onChange("userName")} />
-        <label htmlFor="controlled-color">Contraseña</label>
-        <input id="controlled-color" type="text" value={formState.color} onChange={onChange("password")} />
-        <button>Login</button>
+      <div className="mb-3">
+        <body>
+        <label className="form-label">Usuario</label>
+        <input type="text" value={formState.user} onChange={onChange("userName")} />
+        <label className="form-label">Contraseña</label>
+        <input  type="text" value={formState.color} onChange={onChange("password")} />
+        <button type="submit" class="btn btn-primary">Login</button>
+        </body>
+      </div>
       </form>
-    </div>
-  </div>
   );
 }

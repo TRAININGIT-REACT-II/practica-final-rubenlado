@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { useRouteMatch , useHistory} from "react-router-dom";
+import { useRouteMatch , useHistory, NavLink} from "react-router-dom";
 import { useCallback } from 'react';
 
 const Home = () => {
@@ -10,14 +10,12 @@ const handleOnClick = (field) => useCallback(() => history.push(`/` + field));
 
 return (
          <div className="container">
-          <h1>Training note</h1>
-            <div className="d-grid gap-2">
+
+            <div className="list-group"	>
             
-                  <Button  size="lg" onClick={handleOnClick("login")} class="btn btn-primary btn-lg btn-block">Inicio de sesion</Button>
-                  <Button  size="lg" onClick={handleOnClick("signup")} class="btn btn-secondary btn-lg btn-block">Registro</Button>
+                  <NavLink  to="/login">Inicio de sesion</NavLink>
+                  <NavLink  to="/signup">Registro</NavLink>
             </div>
-          <main>
-          </main>
         </div>
       );
 }

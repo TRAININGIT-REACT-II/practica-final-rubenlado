@@ -4,7 +4,7 @@ export const SIGNUP_CONFIRMED_ACTION = '[signup action] confirmed signup';
 export const LOGIN_CONFIRMED_ACTION=  '[login action] confirmed login';
 export const LOGOUT_ACTION = '[Logout action] logout action';
 
-export function signupAction(userName, password) {
+export function signupAction(userName, password, history) {
     return (dispatch) => {
         fetch("/api/register", {
             method: "POST",
@@ -20,6 +20,7 @@ export function signupAction(userName, password) {
               //setError("");
               //localStorage.setItem('userInfo', json.token);
               dispatch(confirmedSignupAction(json));
+              history.push('/menu')
             }
           }
           )

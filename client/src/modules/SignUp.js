@@ -2,6 +2,7 @@ import { useState } from "react"
 import {useAuth} from '../hooks'
 import { signupAction } from "../../store/actions/AuthActions";
 import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 import "./Login.css";
 
@@ -15,6 +16,7 @@ export const SignUp = () => {
 
   const [formState, setFormState] = useState(DEFAULT_STATE);
   const [error, setError] = useState("");
+  const history = useHistory()
   const dispatch = useDispatch();
 
   const onChange = (key) => {
@@ -26,7 +28,7 @@ export const SignUp = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(signupAction( formState.userName, formState.password));
+    dispatch(signupAction( formState.userName, formState.password, history));
   }
 
   return (

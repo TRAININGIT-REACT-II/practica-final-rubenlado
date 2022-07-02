@@ -4,7 +4,8 @@ import Home from "./Home"
 import {Route, NavLink, Switch } from "react-router-dom";
 import { CreateNote } from "../modules/CreateNote";
 import { MyNotes } from "../modules/MyNotes";
-
+import { EditNote } from "../modules/EditNote";
+import PrivateRoute from "../../utils/PrivateRoute";
 
 // Componente principal de la aplicación.
 const Body = () => {
@@ -19,12 +20,15 @@ const Body = () => {
         <Route path="/signup" exact>
           <SignUp/>
         </Route>
-        <Route path="/createnote" exact>
+        <PrivateRoute path="/createnote" exact>
           <CreateNote/>
-        </Route>
-        <Route path="/mynotes" exact>
+        </PrivateRoute>
+        <PrivateRoute path="/mynotes" exact>
           <MyNotes/>
-        </Route>
+        </PrivateRoute>
+        <PrivateRoute path="/editNote/:id" exact>
+          <EditNote/>
+        </PrivateRoute>
         <Route><Home/></Route>
      </Switch>
     </>

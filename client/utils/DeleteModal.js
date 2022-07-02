@@ -6,20 +6,22 @@ import "./DeleteModal.css";
 const DeleteModal = ({ children, show, onClose }) => {
 
   const modalRef = useRef(null);
-  const modalGroupRef = useRef(document.getElementById("modals"));
-
+  const modalGroupRef = useRef(document.getElementById('modals'));
   useEffect(() => {
     const modalEl = document.createElement("div");
     modalEl.classList.add("modal-hidden");
-    modalGroupRef.current.appendChild(modalEl);
-    modalRef.current = modalEl;
 
+    // lo agregamos al DOM manualmente
+    modalGroupRef.current.appendChild(modalEl);
+    // Guardamos la referencia
+    modalRef.current = modalEl;
     return () => modalGroupRef.current.removeChild(modalRef.current);
   }, [])
 
 
   useEffect(() => {
     if (modalRef.current != null) {
+      
       if (show) {
         modalRef.current.classList.remove("modal-hidden");
       } else {
@@ -29,6 +31,7 @@ const DeleteModal = ({ children, show, onClose }) => {
   }, [show])
 
   if (show && modalRef.current != null) {
+    console.log("entra")
     return createPortal(
       <div role="dialog" aria-modal="true">
         <div className="modal-background" onClick={onClose}/>

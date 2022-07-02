@@ -1,11 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { logout } from '../../store/actions/AuthActions';
+import { useRouteMatch , useHistory} from "react-router-dom";
 import {FormattedMessage} from 'react-intl';
-
+import { useDispatch } from 'react-redux';
 const Header = () => {
 
-   
-
+    const history = useHistory();
+    const dispatch = useDispatch();
     return (
 
         <nav className="navbar navbar-expand-lg navbar-light bg-light border">
@@ -32,7 +34,7 @@ const Header = () => {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/inscriptions/find-inscriptions">
+                        <Link className="nav-link" to="/" onClick={()=>dispatch(logout(history))}>
                            Cerrar sesión
                         </Link>
                     </li>
