@@ -15,6 +15,7 @@ export const MyNotes = () => {
   const authData = store.getState();
   const history = useHistory();
   const handleOnClickEdit = (id) => () => history.push(`/editNote/` + id);
+  const handleOnClickCheck = (id) => () => history.push(`/checkNote/` + id);
 
   const getNotes = () => {
     fetch("/api/notes", {
@@ -40,7 +41,6 @@ export const MyNotes = () => {
   };
 
   const NoteModal = ({ id }) => {
-    console.log("modal")
     return (
         <div class="modal fade" id="myModal">
             <div class="modal-dialog">
@@ -76,7 +76,7 @@ export const MyNotes = () => {
                 <Card.Title>{note.title}</Card.Title>
                 <Card.Text>{note.content}</Card.Text>
                 <div className="note-button-container">
-                  <Button variant="primary" size="sm" className="note-button">
+                  <Button variant="primary" size="sm" className="note-button" onClick={handleOnClickCheck(note.id)}>
                     Ver nota
                   </Button>
                   <Button
