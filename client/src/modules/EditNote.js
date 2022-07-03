@@ -1,8 +1,7 @@
-import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 import { useStore } from "react-redux";
 import { useHistory } from "react-router-dom";
-import "./Form.css"
+
 
 export const EditNote = () => {
   const url = window.location.href.split("/");

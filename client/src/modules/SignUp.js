@@ -1,5 +1,4 @@
 import { useState } from "react"
-import {useAuth} from '../hooks'
 import { signupAction } from "../../store/actions/AuthActions";
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
@@ -29,6 +28,7 @@ export const SignUp = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(signupAction( formState.userName, formState.password, history));
+    history.push("/")
   }
 
   return (

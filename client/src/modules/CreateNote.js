@@ -1,19 +1,15 @@
-import "bootstrap/dist/css/bootstrap.css";
-import { InputGroup, FormControl, Button } from "react-bootstrap";
-import { useContext, useState } from "react";
-import {useSelector, useStore} from 'react-redux';
-import { store } from "../../store/store";
+import { useState } from "react";
+import { useStore } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export const CreateNote = () => {
-  
-
   const DEFAULT_STATE = {
     title: "",
     body: "",
   };
 
   const [formState, setFormState] = useState(DEFAULT_STATE);
-
+  const history = useHistory();
 
   const onChange = (key) => {
     return (e) =>
@@ -27,32 +23,30 @@ export const CreateNote = () => {
   const authData = store.getState();
 
   const createNote = () => {
-
     fetch("/api/notes", {
-        method: "POST",
-        body: JSON.stringify({
-            title: formState.title,
-            content: formState.body
-         
-        }),
-        headers : {
-            'apitoken' : authData.auth.token,
-            'Content-Type': 'application/json'
-         },
-      }).then((res) =>res.json())
+      method: "POST",
+      body: JSON.stringify({
+        title: formState.title,
+        content: formState.body,
+      }),
+      headers: {
+        apitoken: authData.auth.token,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
       .then((json) => {
         if (json.error != null) {
           //setError(json.error);
         }
-    })
-};
+      });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     createNote();
+    history.push("/")
   };
-
-  
 
   return (
     <>
